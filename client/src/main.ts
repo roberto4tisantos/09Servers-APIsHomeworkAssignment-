@@ -1,40 +1,42 @@
 import './styles/jass.css';
 
 // * All necessary DOM elements selected
-const searchForm: HTMLFormElement = document.getElementById(
-  'search-form'
-) as HTMLFormElement;
-const searchInput: HTMLInputElement = document.getElementById(
-  'search-input'
-) as HTMLInputElement;
-const todayContainer = document.querySelector('#today') as HTMLDivElement;
-const forecastContainer = document.querySelector('#forecast') as HTMLDivElement;
-const searchHistoryContainer = document.getElementById(
-  'history'
-) as HTMLDivElement;
-const heading: HTMLHeadingElement = document.getElementById(
-  'search-title'
-) as HTMLHeadingElement;
-const weatherIcon: HTMLImageElement = document.getElementById(
-  'weather-img'
-) as HTMLImageElement;
-const tempEl: HTMLParagraphElement = document.getElementById(
-  'temp'
-) as HTMLParagraphElement;
-const windEl: HTMLParagraphElement = document.getElementById(
-  'wind'
-) as HTMLParagraphElement;
-const humidityEl: HTMLParagraphElement = document.getElementById(
-  'humidity'
-) as HTMLParagraphElement;
+document.addEventListener('search-button', () => {
+  const searchForm: HTMLFormElement = document.getElementById('search-form') as HTMLFormElement;
+  const searchInput: HTMLInputElement = document.getElementById('search-input') as HTMLInputElement;
+  const todayContainer = document.querySelector('#today') as HTMLDivElement;
+  const forecastContainer = document.querySelector('#forecast') as HTMLDivElement;
+  const searchHistoryContainer = document.getElementById('history') as HTMLDivElement;
+  const heading: HTMLHeadingElement = document.getElementById('search-title') as HTMLHeadingElement;
+  const weatherIcon: HTMLImageElement = document.getElementById('weather-img') as HTMLImageElement;
+  const tempEl: HTMLParagraphElement = document.getElementById('temp') as HTMLParagraphElement;
+  const windEl: HTMLParagraphElement = document.getElementById('wind') as HTMLParagraphElement;
+  const humidityEl: HTMLParagraphElement = document.getElementById('humidity') as HTMLParagraphElement;
+  //searchButton
+  const searchButton = document.getElementById('search-button') as HTMLButtonElement;
+});
 
 /*
-
-API Calls
-
+Implement API Calls
 */
-
 const fetchWeather = async (cityName: string) => {
+
+  const queryURL = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=f50fdeda34c6840610aff5979774945f&units=metric`;
+
+  fetch(queryURL)
+    .then((response) => {
+      return response.json();
+    })
+    .then((data) => {
+      for (const user of data) {
+        // ? Separating the logic of creating a user button into a function allows for better readability and reusability
+        const repoButton = createUserButton(user.login, user.html_url);
+
+        // ? Appending the dynamically generated html to the div associated with the id="users"
+        usersContainer.appendChild(repoButton);
+      }
+  });
+
   const response = await fetch('/api/weather/', {
     method: 'POST',
     headers: {

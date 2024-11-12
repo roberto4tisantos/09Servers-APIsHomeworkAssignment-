@@ -2,6 +2,19 @@ import dotenv from 'dotenv';
 dotenv.config();
 
 // TODO: Define an interface for the Coordinates object
+interface ApiCoordinates{
+
+  // declare the properties
+  lat: Float32Array;
+  long: Float32Array;
+
+  // declare the methods
+  getCoordinates(lat: Float32Array, long: Float32Array): void;
+  setCoordinates(lat: Float32Array, long: Float32Array): void;
+}
+
+// export the Driveable interface
+export default ApiCoordinates;
 
 // TODO: Define a class for the Weather object
 
