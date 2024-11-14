@@ -1,7 +1,6 @@
 import './styles/jass.css';
 
 // * All necessary DOM elements selected
-document.addEventListener('search-button', () => {
   const searchForm: HTMLFormElement = document.getElementById('search-form') as HTMLFormElement;
   const searchInput: HTMLInputElement = document.getElementById('search-input') as HTMLInputElement;
   const todayContainer = document.querySelector('#today') as HTMLDivElement;
@@ -12,30 +11,17 @@ document.addEventListener('search-button', () => {
   const tempEl: HTMLParagraphElement = document.getElementById('temp') as HTMLParagraphElement;
   const windEl: HTMLParagraphElement = document.getElementById('wind') as HTMLParagraphElement;
   const humidityEl: HTMLParagraphElement = document.getElementById('humidity') as HTMLParagraphElement;
-  //searchButton
-  const searchButton = document.getElementById('search-button') as HTMLButtonElement;
-});
-
+  
 /*
-Implement API Calls
+API Calls
 */
 const fetchWeather = async (cityName: string) => {
 
-  const queryURL = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=f50fdeda34c6840610aff5979774945f&units=metric`;
+  const queryURL = `https://api.openweathermap.org/data/2.5/weather?q=${cityName}&appid=f50fdeda34c6840610aff5979774945f&units=metric`;
+  console.log(`QueryURL: ${queryURL}`);
 
-  fetch(queryURL)
-    .then((response) => {
-      return response.json();
-    })
-    .then((data) => {
-      for (const user of data) {
-        // ? Separating the logic of creating a user button into a function allows for better readability and reusability
-        const repoButton = createUserButton(user.login, user.html_url);
-
-        // ? Appending the dynamically generated html to the div associated with the id="users"
-        usersContainer.appendChild(repoButton);
-      }
-  });
+  const responseWeather= await fetch(queryURL);
+  console.log(`responseWeather: ${responseWeather}`);
 
   const response = await fetch('/api/weather/', {
     method: 'POST',
