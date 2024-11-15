@@ -29,8 +29,8 @@
     "noFallthroughCasesInSwitch": true,
 
     /* Emit */
-    "outDir": "./dist", /* Specify an output folder for all emitted files. */
-    "noEmitOnError": true, /* Disable emitting files if any type checking errors are reported. */
+    "outDir": "dist", /* Specify an output folder for all emitted files. */
+    //"noEmitOnError": true, /* Disable emitting files if any type checking errors are reported. */
 
     /* Interop Constraints */
     "esModuleInterop": false, /* Emit additional JavaScript to ease support for importing CommonJS modules. This enables 'allowSyntheticDefaultImports' for type compatibility. */
