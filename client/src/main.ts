@@ -20,10 +20,8 @@ const fetchWeather = async (cityName: string) => {
   const queryURL = `https://api.openweathermap.org/data/2.5/weather?q=${cityName}&appid=f50fdeda34c6840610aff5979774945f&units=metric`;
   console.log(`QueryURL: ${queryURL}`);
 
-  const responseWeather= await fetch(queryURL);
-  console.log(`responseWeather: ${responseWeather}`);
-
-  const response = await fetch('/api/weather/', {
+  //const response = await fetch('/api/weather/', {
+  const response = await fetch(queryURL, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -32,7 +30,6 @@ const fetchWeather = async (cityName: string) => {
   });
 
   const weatherData = await response.json();
-
   console.log('weatherData: ', weatherData);
 
   renderCurrentWeather(weatherData[0]);
@@ -65,8 +62,7 @@ Render Functions
 */
 
 const renderCurrentWeather = (currentWeather: any): void => {
-  const { city, date, icon, iconDescription, tempF, windSpeed, humidity } =
-    currentWeather;
+  const { city, date, icon, iconDescription, tempF, windSpeed, humidity } = currentWeather;
 
   // convert the following to typescript
   heading.textContent = `${city} (${date})`;
@@ -108,8 +104,7 @@ const renderForecast = (forecast: any): void => {
 const renderForecastCard = (forecast: any) => {
   const { date, icon, iconDescription, tempF, windSpeed, humidity } = forecast;
 
-  const { col, cardTitle, weatherIcon, tempEl, windEl, humidityEl } =
-    createForecastCard();
+  const { col, cardTitle, weatherIcon, tempEl, windEl, humidityEl } = createForecastCard();
 
   // Add content to elements
   cardTitle.textContent = date;
