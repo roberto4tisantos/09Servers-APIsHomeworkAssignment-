@@ -7,13 +7,21 @@ const router = Router();
 // TODO: POST Request with city name to retrieve weather data
 router.post('/', (req, res) => {
   // TODO: GET weather data from city name
+  console.log(req);
+  console.log(res);
   // TODO: save city to search history
 });
 
 // TODO: GET search history
-router.get('/history', async (req, res) => {});
+router.get('/history', async (req, res) => {
+  console.log(req);
+  console.log(res);
+});
 
 // * BONUS TODO: DELETE city from search history
-router.delete('/history/:id', async (req, res) => {});
+router.delete('/history/:id', async (req, res) => {
+  console.log(req);
+  console.log(res);  
+});
 
 export default router;
