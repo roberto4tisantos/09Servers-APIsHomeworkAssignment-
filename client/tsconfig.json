@@ -1,15 +1,36 @@
 {
   "extends": "../tsconfig.json",
   "compilerOptions": {
+    /* Language and Environment */
+    "target": "ES2020",
     "useDefineForClassFields": true,
+
+    /* Modules */    
+    "module": "ESNext",
+    "rootDir": "src" /* Specify the root folder within your source files. */,
+    
+    /* JavaScript Support */
+    "allowJs": true /* Allow JavaScript files to be a part of your program. Use the 'checkJS' option to get errors from these files. */,
+    "checkJs": true /* Enable error reporting in type-checked JavaScript files. */,    
     "lib": ["ES2020", "DOM", "DOM.Iterable"],
     "skipLibCheck": true,
 
     /* Bundler mode */
+    "moduleResolution": "bundler",
     "allowImportingTsExtensions": true,
     "resolveJsonModule": true,
     "isolatedModules": true,
-    "noEmit": true
+    "noEmit": true,
+
+    /* Linting */
+    "strict": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noFallthroughCasesInSwitch": true,
+
+    /* Emit */
+    "outDir": "dist" /* Specify an output folder for all emitted files. */,
+    "noEmitOnError": true /* Disable emitting files if any type checking errors are reported. */
   },
   "include": ["src"]
 }
