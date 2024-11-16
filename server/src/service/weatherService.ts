@@ -1,173 +1,258 @@
 import dotenv from 'dotenv';
 dotenv.config();
 
+// {"coord":{"lon":-79.4163,"lat":43.7001},
+//  "weather":[{"id":804,"main":"Clouds","description":"overcast clouds","icon":"04n"}],
+//  "base":"stations",
+//  "main":{"temp":280.31,"feels_like":277.13,"temp_min":279.44,"temp_max":280.97,"pressure":1017,"humidity":86,"sea_level":1017,"grnd_level":1001},
+//  "visibility":10000,
+//  "wind":{"speed":5.14,"deg":340},
+//  "clouds":{"all":100},
+//  "dt":1731720028,
+//  "sys":{"type":1,"id":718,"country":"CA","sunrise":1731672757,"sunset":1731707540},
+//  "timezone":-18000,"id":6167865,"name":"Toronto","cod":200}
+
 // TODO: Define an interface for the Coordinates object
-// interface ApiCoordinates{
+ interface ApiCoordinates{
 
-//   // declare the properties
-//   lat: Float32Array;
-//   lon: Float32Array;
+  // declare the properties
+  coord: {
+    lon: Float32Array,
+    lat: Float32Array,  
+  };
 
-//   dt: string; // Timestamp of the weather report
+  weather: [{
+    id: number,
+    main: string,
+    description: string,
+    icon: string
+  }];
 
-//   main: {
-//     temp: number; // Current temperature
-//     feels_like: number; // Feels like temperature
-//     temp_min: number; // Minimum temperature
-//     temp_max: number; // Maximum temperature
-//     pressure: number; // Atmospheric pressure
-//     sea_level: number; // Pressure at sea level
-//     grnd_level: number; // Pressure at ground level
-//     humidity: number; // Humidity percentage
-//     temp_kf: number; // Temperature difference for calculation
-//   };
-//   weather: {
-//     id: number; // Weather condition ID
-//     main: string; // Main weather condition
-//     description: string; // Detailed weather description
-//     icon: string; // Icon code for weather condition
-//   }[];
-//   clouds: {
-//     all: number; // Cloud coverage percentage
-//   };
-//   wind: {
-//     speed: number; // Wind speed in m/s
-//     deg: number; // Wind direction in degrees
-//     gust: number; // Wind gust in m/s
-//   };
-//   visibility: number; // Visibility in meters
-//   pop: number; // Probability of precipitation
-//   rain: {
-//     '3h': number; // Rain volume for the past
-//   };
-//   sys: {
-//     pod: string; // Part of the day
-//   };
-//   dt_txt: string; // Formatted datetime of the forecast  
+  base: string; //stations
 
-//   // declare the methods
-//   getCoordinates(lat: Float32Array, lon: Float32Array): void;
-//   setCoordinates(lat: Float32Array, lon: Float32Array): void;  
+  main: {
+    temp: number,
+    feels_like: number,
+    temp_min: number,
+    temp_max: number,
+    pressure: number,
+    sea_level: number,
+    grnd_level: number,
+    humidity: number,
+    temp_kf: number
+  };    
 
-// }
+  visibility: number;
+
+  wind: {
+    speed: number,
+    deg: number,
+    gust: number
+  };
+
+  clouds: {
+    all: number
+  };
+
+  dt: number;
+
+  sys: {
+    "type": number,
+    "id": number,
+    "country": string,
+    "sunrise": number,
+    "sunset": number
+  }; 
+
+  timezone: number;
+  id: number;
+  name: string;
+  cod: number;
+
+  // declare the methods
+  getCoordinates(coord: any): void;
+  setCoordinates(coord: any): void;  
+
+}
 
 // TODO: Define a class for the Weather object
-// class Weather implements ApiCoordinates{
+class Weather implements ApiCoordinates{
 
-//   // Properties
-//   lat: Float32Array;
-//   lon: Float32Array;
-//   dt: string;
-//   main: {
-//     temp: number;
-//     feels_like: number;
-//     temp_min: number;
-//     temp_max: number;
-//     pressure: number;
-//     sea_level: number;
-//     grnd_level: number;
-//     humidity: number;
-//     temp_kf: number;
-//   };
-//   weather: {
-//     id: number;
-//     main: string;
-//     description: string;
-//     icon: string;
-//   }[];
-//   clouds: {
-//     all: number;
-//   };
-//   wind: {
-//     speed: number;
-//     deg: number;
-//     gust: number;
-//   };
-//   visibility: number;
-//   pop: number;
-//   rain: {
-//     '3h': number;
-//   };
-//   sys: {
-//     pod: string;
-//   };
-//   dt_txt: string;
+  // declare the properties
+  coord: {
+    lon: Float32Array,
+    lat: Float32Array,  
+  };
+
+  weather: [{
+    id: number,
+    main: string,
+    description: string,
+    icon: string
+  }];
+
+  base: string;
+
+  main: {
+    temp: number,
+    feels_like: number,
+    temp_min: number,
+    temp_max: number,
+    pressure: number,
+    sea_level: number,
+    grnd_level: number,
+    humidity: number,
+    temp_kf: number
+  };    
+
+  visibility: number;
+
+  wind: {
+    speed: number,
+    deg: number,
+    gust: number
+  };
+
+  clouds: {
+    all: number
+  };
+
+  dt: number;
+
+  sys: {
+    "type": number,
+    "id": number,
+    "country": string,
+    "sunrise": number,
+    "sunset": number
+  }; 
+
+  timezone: number;
+  id: number;
+  name: string;
+  cod: number
   
-// // Constructor
-// constructor(
-//   lat: Float32Array,
-//   lon: Float32Array,
-//   dt: string,
-//   main: {
-//     temp: number;
-//     feels_like: number;
-//     temp_min: number;
-//     temp_max: number;
-//     pressure: number;
-//     sea_level: number;
-//     grnd_level: number;
-//     humidity: number;
-//     temp_kf: number;
-//   },
-//   weather: {
-//     id: number;
-//     main: string;
-//     description: string;
-//     icon: string;
-//   }[],
-//   clouds: {
-//     all: number;
-//   },
-//   wind: {
-//     speed: number;
-//     deg: number;
-//     gust: number;
-//   },
-//   visibility: number,
-//   pop: number,
-//   rain: {
-//     '3h': number;
-//   },
-//   sys: {
-//     pod: string;
-//   },
-//   dt_txt: string
-// ) {
-//   this.lat = lat;
-//   this.lon = lon;
-//   this.dt = dt;
-//   this.main = main;
-//   this.weather = weather;
-//   this.clouds = clouds;
-//   this.wind = wind;
-//   this.visibility = visibility;
-//   this.pop = pop;
-//   this.rain = rain;
-//   this.sys = sys;
-//   this.dt_txt = dt_txt;
-// }
+// Constructor
+constructor(
+  // declare the properties
+  coord: {
+    lon: Float32Array,
+    lat: Float32Array,  
+  },
 
-// // Methods
-// getCoordinates(lat: Float32Array, lon: Float32Array): void {
-//   this.lat = lat;
-//   this.lon = lon;
-// }
+  weather: [{
+    id: number,
+    main: string,
+    description: string,
+    icon: string
+  }],
 
-// setCoordinates(lat: Float32Array, lon: Float32Array): void {
-//   this.lat = lat;
-//   this.lon = lon;
-// }
-// }
+  base: string,
+
+  main: {
+    temp: number,
+    feels_like: number,
+    temp_min: number,
+    temp_max: number,
+    pressure: number,
+    sea_level: number,
+    grnd_level: number,
+    humidity: number,
+    temp_kf: number
+  },   
+
+  visibility: number,
+
+  wind: {
+    speed: number,
+    deg: number,
+    gust: number
+  },
+
+  clouds: {
+    all: number
+  },
+
+  dt: number,
+
+  sys: {
+    "type": number,
+    "id": number,
+    "country": string,
+    "sunrise": number,
+    "sunset": number
+  }, 
+
+  timezone: number,
+  id: number,
+  name: string,
+  cod: number
+
+) {
+  // declare the properties
+  this.coord = coord,
+  this.weather = weather,
+  this.base = base,
+  this.main = main,
+  this.visibility = visibility,
+  this.wind = wind,
+  this.clouds = clouds,
+  this.dt = dt,
+  this.sys = sys,
+  this.timezone = timezone,
+  this.id = id,
+  this.name = name,
+  this.cod = cod
+}
+
+  // Methods
+  getCoordinates(coord: any): void {
+    return this.coord = coord;
+  }
+
+  setCoordinates(coord: any): void {
+    this.coord = coord;
+  }
+}
 
 // TODO: Complete the WeatherService class
 class WeatherService {
   // TODO: Define the baseURL, API key, and city name properties
+  baseURL: string;
+  apiKey: string;
+  city: string;
+
+  constructor(baseURL: string, apiKey: string, city: string) {
+    this.baseURL = baseURL;
+    this.apiKey = apiKey;
+    this.city = city;
+  }
   // TODO: Create fetchLocationData method
   // private async fetchLocationData(query: string) {}
+  private async fetchLocationData(): Promise<any> {
+    const url = this.baseURL;
+    const response = await fetch(url);
+    if (!response.ok) {
+      throw new Error("Failed to fetch location data");
+    }
+    return response.json();
+  }  
+
   // TODO: Create destructureLocationData method
-  // private destructureLocationData(locationData: Coordinates): Coordinates {}
+  private destructureLocationData(locationData: Coordinates): Coordinates {
+    if (!locationData || locationData.length === 0) {
+      throw new Error("No location data found");
+    }
+    return {
+      lat: locationData[0].lat,
+      lon: locationData[0].lon,
+    };
+
+  }
   // TODO: Create buildGeocodeQuery method
-  // private buildGeocodeQuery(): string {}
+  private buildGeocodeQuery(): string {
+    return `${this.baseURL}/geo/1.0/direct?q=${this.city}&appid=${this.apiKey}`;    
+  }
   // TODO: Create buildWeatherQuery method
   // private buildWeatherQuery(coordinates: Coordinates): string {}
   // TODO: Create fetchAndDestructureLocationData method
