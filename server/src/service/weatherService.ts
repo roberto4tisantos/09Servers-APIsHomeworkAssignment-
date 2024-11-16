@@ -70,8 +70,8 @@ dotenv.config();
   cod: number;
 
   // declare the methods
-  getCoordinates(coord: any): void;
-  setCoordinates(coord: any): void;  
+  getCoordinates(coord: {}): void;
+  setCoordinates(coord: {}): void;  
 
 }
 
@@ -207,12 +207,13 @@ constructor(
 
   // Methods
   getCoordinates(coord: any): void {
-    return this.coord = coord;
-  }
+    return this.coord.lat = coord.lat,
+           this.coord.lon = coord.lon 
+  };
 
   setCoordinates(coord: any): void {
     this.coord = coord;
-  }
+  };
 }
 
 // TODO: Complete the WeatherService class
@@ -239,13 +240,12 @@ class WeatherService {
   }  
 
   // TODO: Create destructureLocationData method
-  private destructureLocationData(locationData: Coordinates): Coordinates {
-    if (!locationData || locationData.length === 0) {
+  private destructureLocationData(coord: any): Coordinates {
+    if (!coord || coord.length === 0) {
       throw new Error("No location data found");
     }
     return {
-      lat: locationData[0].lat,
-      lon: locationData[0].lon,
+      coord,
     };
 
   }
