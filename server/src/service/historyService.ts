@@ -1,11 +1,12 @@
-import { promises as fs, PathLike } from 'fs';
+import { randomInt } from 'crypto';
+import { promises as fs, FileHandle } from 'fs';
 import { FileHandle } from 'fs/promises';
 
 // TODO: Define a City class with name and id properties
 class City {
   
   name: string;
-  id: number;  
+  id: number; 
   static id: string;
 
   constructor(name: string, id: number) {
@@ -16,6 +17,7 @@ class City {
 
 // TODO: Complete the HistoryService class
 class HistoryService extends City{
+  [x: string]: any;
 
   // TODO: Define a read method that reads from the searchHistory.json file
   private async read() {
@@ -31,20 +33,24 @@ class HistoryService extends City{
   async getCities() {
     return await this.read();
   }
+  
   // TODO Define an addCity method that adds a city to the searchHistory.json file
   async addCity(city: string) {
     const cities = await this.read();
+    const id = randomInt(10);
     cities.push({ 
       name: city,
-      id: 0
+      id: id
     });
     await this.write(cities);
   }
   // * BONUS TODO: Define a removeCity method that removes a city from the searchHistory.json file
-  async removeCity(id: string) {
+  async removeCity(id: number) {
     const cities = await this.read();
-    const updatedCities = cities.filter(_city => City.id !== id);
-    await this.write(updatedCities);
+    //cities.pop(id == id);
+    console.log(cities);
+    // const updatedCities = cities.filter(_city => City.id !== id);
+    // await this.write(updatedCities);
   }
 }
 

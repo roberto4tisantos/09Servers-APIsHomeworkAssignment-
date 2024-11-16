@@ -29,7 +29,8 @@ router.post('/', async (req, res) => {
 // TODO: GET search history
 router.get('/history', async (req, res) => {
   try {
-    const history = await HistoryService.getSearchHistory();
+    console.log(req);
+    const history = await HistoryService.getCities();
     return res.status(200).json(history);
   } catch (error) {
     return res.status(500).json({ error: 'Failed to fetch search history' });
@@ -45,9 +46,9 @@ router.delete('/history/:id', async (req, res) => {
   }
 
   try {
-    const deleted = await HistoryService.deleteHistoryEntry(id);
+    const deleted = await HistoryService.removeCity(id);
 
-    if (deleted) {
+    if (id) {
       return res.status(200).json({ message: 'Entry deleted successfully' });
     } else {
       return res.status(404).json({ error: 'Entry not found' });

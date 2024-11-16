@@ -218,6 +218,7 @@ constructor(
 
 // TODO: Complete the WeatherService class
 class WeatherService {
+  [x: string]: any;
   // TODO: Define the baseURL, API key, and city name properties
   baseURL: string;
   apiKey: string;
